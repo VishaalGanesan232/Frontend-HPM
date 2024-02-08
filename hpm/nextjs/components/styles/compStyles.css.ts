@@ -46,7 +46,13 @@ export const edmrInpStyles = style({
   display: "flex",
 });
 
+export const noncommercialStyles = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: "20px",
+});
 export const buttonBlock = style({
   display: "flex",
   gap: "10px",
+  marginTop: "20px",
 });

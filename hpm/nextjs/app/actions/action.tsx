@@ -10,7 +10,10 @@ import {
 } from "../constants/constant";
 import { NextResponse } from "next/server";
 
-const loginValidate = (userName: string, password: string) =>
+const loginValidate = (
+  userName: FormDataEntryValue | null,
+  password: FormDataEntryValue | null
+) =>
   DEMO_LOGIN_DATA.some(
     (obj) => obj.userName === userName && obj.password === password
   );
@@ -32,7 +35,7 @@ export async function submitLoginData(prevState: any, formData: FormData) {
   }
 }
 
-export async function checkLogin(pathName) {
+export async function checkLogin(pathName: string | null) {
   const session = await getSession();
   if (session.username && pathName === "/") {
     return { user: true };
@@ -47,23 +50,26 @@ export async function getToken() {
     cache: "no-store",
     body: new URLSearchParams({
       grant_type: "client_credentials",
-      scope: "api://philips-software-entitlement-api-nonprod/.default",
-      client_id: "3cd13e11-f1ac-454e-8157-13dc4211aaf2",
-      client_secret: "hkx8Q~HhDNxPlndvUIFcM0TBQXPggzQwTu5gtaae",
+      client_id: "e1d47fbe-2f15-44a4-8685-b2b33b8f1f73",
+      client_secret: "i6C8Q~jKlwTjL9wzHl4KuMABO6yrQ0g_UWBM4bui",
+      scope: "api://philips-product-master-data-api-nonprod/.default",
     }),
   });
   const data = await response.json();
-  console.log("DATA: ", data);
   return data?.access_token;
 }
 
-export async function getEntitlementAPI() {
+//  EDMR
+
+export async function getProducts(keys: string | null) {
   const token = await getToken();
-  console.log("Token: ", token);
+
   const id = getRandomId();
   const time = getTimeStamp();
   const response = await fetch(
-    "https://dev.api.it.philips.com/philips-software-entitlement-api/v1/entitlements/eId=EFT5G-KU25RM-S6IBB",
+    !keys
+      ? "https://dev.api.it.philips.com/philips-product-master-data-api/products"
+      : `https://dev.api.it.philips.com/philips-product-master-data-api/products/${keys}`,
     {
       method: "GET",
       headers: {
@@ -75,29 +81,9 @@ export async function getEntitlementAPI() {
     }
   );
   const data = await response.json();
-  console.log("entitlement: ", data);
   return data;
 }
 
-//  EDMR
-
-// export async function getProducts(token: String) {
-//   console.log("Token23: ", token);
-//   const id = getRandomId();
-//   const time = getTimeStamp();
-//   const response = await fetch(
-//     "https://dev.api.it.philips.com/philips-product-master-data-api/products/ad5fae2c-6f5f-4f76-a19d-24a8c7802dda",
-//     {
-//       method: "GET",
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//         "X-Corelation-Id": id,
-//         capabilityConsumer: "defaultUI",
-//         capabilityConsumerTimestamp: time,
-//       },
-//     }
-//   );
-//   const data = await response.json();
-//   console.log("getProducts", data);
-//   return data;
-// }
+export async function revoke(prevState: any, formData: FormData) {
+  return "";
+}

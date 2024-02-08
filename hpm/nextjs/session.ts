@@ -5,7 +5,7 @@ const COOKIE_PASSWORD =
   "fehfnskaleiehfnef2830r8fjafabe1289309-fakhegbbkafgakagkindvugfakf";
 
 type UserSession = {
-  username: string;
+  username: FormDataEntryValue | null;
 };
 
 export const getSession = async (): Promise<IronSession<UserSession>> =>

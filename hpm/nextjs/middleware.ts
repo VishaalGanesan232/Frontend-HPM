@@ -9,7 +9,6 @@ export const middleware = async (request: NextRequest) => {
     request.nextUrl.pathname.startsWith(path)
   );
   // console.log("SESSION:", session);
-  console.log("allowedpath: ", allowedPath);
   if (!session.username) {
     return NextResponse.redirect(new URL("/", request.url));
   }

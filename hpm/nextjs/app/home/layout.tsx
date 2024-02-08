@@ -1,7 +1,6 @@
 import { base } from "@filament-theme/base";
 import "@filament/fonts";
 import type { Metadata } from "next";
-import Home2 from "../../components/home2";
 import Home from "../../components/home";
 import { colorBlueDark } from "@filament/theme/styles/color/blue-dark";
 import { accentOrangeLight } from "@filament/theme/styles/accent/orange-light";

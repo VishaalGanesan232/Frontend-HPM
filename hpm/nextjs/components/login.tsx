@@ -30,12 +30,7 @@ import {
 } from "@filament-theme/login";
 import { useRouter } from "next/navigation";
 import { useFormState } from "react-dom";
-import {
-  checkLogin,
-  getEntitlementAPI,
-  getToken,
-  submitLoginData,
-} from "../app/actions/action";
+import { checkLogin, getToken, submitLoginData } from "../app/actions/action";
 import { getSession } from "../session";
 import { usePathname } from "next/navigation";
 import { getTimeStamp } from "../app/constants/constant";
@@ -58,16 +53,16 @@ export const DarkBlue = () => {
   };
 
   const getEntitlement = async () => {
-    const data = await getEntitlementAPI();
+    // const data = await getEntitlementAPI();
   };
 
   useEffect(() => {
-    getEntitlement();
+    // getEntitlement();
   }, []);
 
   const [isLoggedIn, setLogin] = useState<boolean | undefined>(undefined);
 
-  const validateEmail = (email: String | undefined) => {
+  const validateEmail = (email: string) => {
     const valStr = "/^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,})$/";
     if (email.match(valStr)) {
       return true;
@@ -75,13 +70,12 @@ export const DarkBlue = () => {
   };
 
   useEffect(() => {
-    // console.log("inside useeffect", pathname);
     const check = async () => {
       const loggedIn = await checkLogin(pathname);
       setLogin(loggedIn?.user);
     };
     check();
-  }, []);
+  }, [pathname]);
 
   if (isLoggedIn) {
     router.push("/home");

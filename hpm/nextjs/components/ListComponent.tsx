@@ -2,7 +2,13 @@
 import { Item, ListItem, ListView } from "@filament/react";
 import React, { ReactPropTypes } from "react";
 
-const ListComponent = (props) => {
+export type listProps = {
+  selectionMode: any;
+  onSelectionChange: any;
+  listItems: Array<string>;
+};
+
+const ListComponent = (props: listProps) => {
   const { selectionMode, onSelectionChange, listItems } = props;
   // console.log(onSelectionChange);
   return (
@@ -12,7 +18,7 @@ const ListComponent = (props) => {
       onSelectionChange={onSelectionChange}
       aria-label="List Item"
     >
-      {listItems.map((listItem: String) => (
+      {listItems.map((listItem: string) => (
         <Item aria-label="test" key={listItem}>
           {listItem}
         </Item>

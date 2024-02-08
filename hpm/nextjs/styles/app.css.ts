@@ -2,7 +2,7 @@ import { globalStyle, style } from "@vanilla-extract/css";
 
 export const page = style({
   display: "grid",
-  gridTemplateColumns: "auto auto",
+  gridTemplateColumns: "1fr 3fr",
   gridTemplateRows: "auto 1fr",
   gridTemplateAreas: `
     'header header'
@@ -28,7 +28,7 @@ export const header = style({
 export const sidebar = style({
   gridArea: "sidebar",
   overflowY: "auto",
-  width: "320px",
+  // width: "320px",
   height: "100%",
 });
 

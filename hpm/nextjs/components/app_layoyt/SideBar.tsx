@@ -45,26 +45,51 @@ import {
 } from "../styles/compStyles.css";
 import clsx from "clsx";
 
-import { accentOrangeDark } from "@filament/theme/styles/accent/orange-dark";
-import { accentOrangeLight } from "@filament/theme/styles/accent/orange-light";
-import { colorBlueLight } from "@filament/theme/styles/color/blue-light";
-import { colorGrayDark } from "@filament/theme/styles/color/gray-dark";
-import { sizeRegular } from "@filament/theme/styles/size/regular";
-import type { Selection } from "@filament/react-types";
-import NavBar from "./NavBar";
-
-import React, { useEffect, useMemo, useState } from "react";
+import React, {
+  Dispatch,
+  ReactPropTypes,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import * as styles from "../../styles";
-import { colorBlueDark } from "@filament/theme/styles/index";
-import { container } from "@filament-theme/login";
 import ListComponent from "../ListComponent";
 import { HPM_LIST_ITEMS } from "../../app/constants/constant";
+import { useRouter } from "next/navigation";
 
-const SideBar = (props) => {
+export type sideBarProps = {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+  darkMode: boolean;
+  setDarkMode: (arg: boolean) => void;
+};
+
+const SideBar = (props: sideBarProps) => {
   const { open, setOpen, darkMode, setDarkMode } = props;
+  const router = useRouter();
 
-  const handleSelection = (keys: Selection) => {
-    console.log("Selected Keys:");
+  const routeList = (name: String) => {
+    switch (name) {
+      case "eDMR Revocation":
+        router.push("/home/hpm/eDMR");
+        break;
+      case "Non-commercial Upgrade":
+        router.push("/home/hpm/non-commercialupgrade");
+        break;
+      case "Guardian Activation and Deactivation":
+        router.push("/home/hpm/guardian-activation-deactivation");
+        break;
+      case "Generate Report":
+        router.push("/home/hpm/generate-report");
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleSelection = (keys: any) => {
+    routeList(keys?.anchorKey);
   };
 
   if (open) {

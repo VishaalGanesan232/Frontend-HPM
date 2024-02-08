@@ -1,0 +1,49 @@
+---
+applications:
+  - name: proxy
+    env:
+      OAUTH2_PROXY_CLIENT_ID: ((OAUTH2_PROXY_CLIENT_ID))
+      OAUTH2_PROXY_CLIENT_SECRET: ((OAUTH2_PROXY_CLIENT_SECRET))
+      OAUTH2_PROXY_COOKIE_DOMAINS: "dar.eu1.phsdp.com"
+      OAUTH2_PROXY_COOKIE_NAME: dls_dar_tool_eu
+      OAUTH2_PROXY_COOKIE_SECRET: ((OAUTH2_PROXY_COOKIE_SECRET))
+      OAUTH2_PROXY_COOKIE_SECURE: "true"
+      OAUTH2_PROXY_EMAIL_DOMAINS: philips.com
+      OAUTH2_PROXY_HTTP_ADDRESS: 0.0.0.0:8080
+      OAUTH2_PROXY_LOGIN_URL: https://login.microsoftonline.com/1a407a2d-7675-4d17-8692-b3ac285306e4/oauth2/v2.0/authorize
+      OAUTH2_PROXY_OIDC_ISSUER_URL: https://login.microsoftonline.com/1a407a2d-7675-4d17-8692-b3ac285306e4/v2.0
+      OAUTH2_PROXY_OIDC_JWKS_URL: https://login.microsoftonline.com/1a407a2d-7675-4d17-8692-b3ac285306e4/discovery/v2.0/keys
+      OAUTH2_PROXY_PROVIDER: oidc
+      OAUTH2_PROXY_REDEEM_URL: https://login.microsoftonline.com/1a407a2d-7675-4d17-8692-b3ac285306e4/oauth2/v2.0/token
+      OAUTH2_PROXY_REDIRECT_URL: "/oauth2/callback"
+      OAUTH2_PROXY_REVERSE_PROXY: "true"
+      OAUTH2_PROXY_SCOPE: openid email
+      OAUTH2_PROXY_SKIP_OIDC_DISCOVERY: "true"
+      OAUTH2_PROXY_SKIP_PROVIDER_BUTTON: "true"
+      OAUTH2_PROXY_UPSTREAMS: http://dar.apps.internal
+      OAUTH2_PROXY_WHITELIST_DOMAINS: "dar.eu1.phsdp.com"
+    docker:
+      image: docker.eu1.hsdp.io/dls/oauth2-proxy:v7.5.1-amd64
+      username: dBDJPKEV0gZDavVV2OGC
+    routes:
+      - route: dar.eu1.phsdp.com
+        protocol: http1
+    processes:
+      - type: web
+        instances: 1
+        memory: 512M
+        disk_quota: 1024M
+  - name: demorepo
+    docker:
+      image: docker.eu1.hsdp.io/hpm/demorepo
+      username: dBDJPKEV0gZDavVV2OGC
+    routes:
+      - route: dar.apps.internal
+        protocol: http1
+    processes:
+      - type: web
+        instances: 1
+        memory: 512M
+        disk_quota: 1024M
+        health-check-type: http
+        health-check-http-endpoint: "/info"

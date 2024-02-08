@@ -16,7 +16,7 @@ import * as styles from "../styles";
 import { base } from "@filament-theme/base";
 import { Portal } from "@filament/react";
 import { backgroundPrimary } from "@filament-theme/atomics";
-const HomeContents = ({ children }) => {
+const HomeContents = ({ children }: { children: React.ReactNode }) => {
   const [open, setOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 

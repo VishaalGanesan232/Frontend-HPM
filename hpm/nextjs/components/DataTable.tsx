@@ -16,6 +16,7 @@ import DialogComponent from "./DialogComponent";
 const Default = () => {
   const [sortDesctiption, setSortDescription] = useState(edmrColumns);
   const [openDialog, setOpenDialog] = useState(false);
+  // const [info,setInfo] = useState(false);
   return (
     <>
       <Table
@@ -25,8 +26,7 @@ const Default = () => {
         aria-label="Sorted Table"
         selectionMode="single"
         onSelectionChange={(e) => {
-          // setOpenDialog(!openDialog);
-          // console.log("event", e);
+          setOpenDialog(!openDialog);
         }}
       >
         <TableHeader columns={edmrColumns}>
@@ -75,8 +75,13 @@ const Default = () => {
           </Row>
         </TableBody>
       </Table>
-      <Pagination total={20} pageSize={5} currentPage={0} />
-      <DialogComponent openDialog={openDialog} setOpenDialog={setOpenDialog} />
+      {/* <Pagination total={20} pageSize={5} currentPage={0} /> */}
+      <DialogComponent
+        openDialog={openDialog}
+        setOpenDialog={setOpenDialog}
+        setInfo={null}
+        invokedBy={null}
+      />
     </>
   );
 };

@@ -2,6 +2,7 @@
 
 import {
   Brightness,
+  LogOff,
   Moon,
   PersonPortraitCircle,
   PhilipsWordMark,
@@ -52,7 +53,14 @@ import { colorGrayDark } from "@filament/theme/styles/color/gray-dark";
 import { sizeRegular } from "@filament/theme/styles/size/regular";
 import type { Selection } from "@filament/react-types";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, {
+  Dispatch,
+  ReactPropTypes,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import * as styles from "../../styles";
 import { colorBlueDark } from "@filament/theme/styles/index";
 import { container } from "@filament-theme/login";
@@ -60,7 +68,14 @@ import ListComponent from "../ListComponent";
 import { HPM_LIST_ITEMS } from "../../app/constants/constant";
 import { redirect } from "next/navigation";
 
-const NavBar = (props) => {
+export type navBarProps = {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+  darkMode: boolean;
+  setDarkMode: (arg: boolean) => void;
+};
+
+const NavBar = (props: navBarProps) => {
   const { open, setOpen, darkMode, setDarkMode } = props;
 
   return (
@@ -81,35 +96,6 @@ const NavBar = (props) => {
           <H1>HPM Demo App</H1>
         </NavigationBarTitle>
       </div>
-      <PatientInfo className={styles.patientInfo}>
-        <Avatar size="extraSmall">
-          <PersonPortraitCircle style={{ width: "1.5rem", height: "1.5rem" }} />
-        </Avatar>
-        <H2
-          noGutter
-          style={{
-            marginRight: "0.5rem",
-            fontSize: "1rem",
-            fontWeight: "normal",
-            lineHeight: "1.375rem",
-          }}
-        >
-          Patient name
-        </H2>
-        <Label variant="descriptor">ID</Label>
-        <Label>12345678</Label>
-        <FlexBox gap={8} alignItems="center" className={layoutStyle2}>
-          <DotSeparator />
-          <Label variant="descriptor">DOB</Label>
-          <Label>05 Jun 2022</Label>
-        </FlexBox>
-
-        <FlexBox gap={8} alignItems="center" className={layoutStyle3}>
-          <DotSeparator />
-          <Label variant="descriptor">Gender</Label>
-          <Label>Female</Label>
-        </FlexBox>
-      </PatientInfo>
       <FlexBox
         alignItems="center"
         justifyContent="flex-end"
@@ -133,6 +119,10 @@ const NavBar = (props) => {
         </Button>
         <Dropdown variant="input-quiet" defaultSelectedKey="henri">
           <Item key="henri">Schröter, Henri</Item>
+          <Item key="logout">
+            <LogOff />
+            Logout
+          </Item>
         </Dropdown>
       </FlexBox>
     </NavigationBar>
